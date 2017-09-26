@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Drawable</string>
+    <string name="title_drawableitem_detail">DrawableItem Detail</string>
+</resources>
