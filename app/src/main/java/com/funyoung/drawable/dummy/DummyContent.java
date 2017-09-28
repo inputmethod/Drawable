@@ -1,11 +1,13 @@
 package com.funyoung.drawable.dummy;
 
 import com.funyoung.drawable.R;
+import com.funyoung.sound.DataItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -19,6 +21,7 @@ public class DummyContent {
      * An array of sample (dummy) items.
      */
     public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static final List<String> ICONS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
@@ -40,6 +43,15 @@ public class DummyContent {
         addItem(createDummyItem(11, R.string.item_level_drawable_title, R.string.item_level_drawable_content, R.string.item_level_drawable_detail));
         addItem(createDummyItem(12, R.string.item_state_drawable_title, R.string.item_state_drawable_content, R.string.item_state_drawable_detail));
         addItem(createDummyItem(13, R.string.item_transition_drawable_title, R.string.item_transition_drawable_content, R.string.item_transition_drawable_detail));
+
+        ICONS.add("sound_lolipop.png");
+        ICONS.add("sound_machine.png");
+        ICONS.add("sound_mashmollow.png");
+        ICONS.add("sound_piano.png");
+        ICONS.add("sound_pickaku.png");
+        ICONS.add("sound_supermarry.png");
+        ICONS.add("sound_system.png");
+        ICONS.add("sound_water.png");
     }
 
     private static DummyItem createDummyItem(int id, int title, int content, int detail) {
@@ -59,6 +71,17 @@ public class DummyContent {
             builder.append("\nMore details information here.");
         }
         return builder.toString();
+    }
+
+    public static List<DataItem> generateData() {
+        int size = 10 + new Random(99999).nextInt(20);
+        List<DataItem> result = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            DataItem item = new DataItem();
+            item.str = ICONS.get(i % ICONS.size());
+            result.add(item);
+        }
+        return result;
     }
 
     /**

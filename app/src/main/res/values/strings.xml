@@ -56,4 +56,6 @@
     <string name="item_transition_drawable_detail">TransitionDrawable 是LayerDrawable的子类，不过它只负责管理两层drawable，并且提供了一个透明度变化的动画，可以控制从一层drawable过度到另外一层drawable的动画效果。</string>
     <string name="sound_volume_bar_up">sound_volume_bar_up</string>
     <string name="sound_volume_bar_low">sound_volume_bar_low</string>
+    <string name="item_4_sound_icon_view">item_4_sound_icon_view</string>
+    <string name="item_4_select_indicator">item_4_select_indicator</string>
 </resources>
