@@ -2,6 +2,7 @@ package com.funyoung.drawable;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.funyoung.drawable.dummy.ClickListener;
 import com.funyoung.drawable.dummy.DummyContent;
 
 import java.lang.ref.WeakReference;
@@ -112,9 +112,7 @@ public class DrawableItemListActivity extends AppCompatActivity implements Click
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.bind(mValues.get(position));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -135,19 +133,29 @@ public class DrawableItemListActivity extends AppCompatActivity implements Click
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mIdView;
+            public final TextView mTitleView;
             public final TextView mContentView;
             public DummyContent.DummyItem mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mIdView = view.findViewById(R.id.id);
+                mTitleView = view.findViewById(R.id.title);
+                mContentView = view.findViewById(R.id.content);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + mTitleView.getText() + "' " + " '" + mContentView.getText() + "'";
+            }
+
+            public void bind(DummyContent.DummyItem dummyItem) {
+                Resources resources = mView.getContext().getResources();
+                mItem = dummyItem;
+                mIdView.setText(dummyItem.id);
+                mTitleView.setText(resources.getString(dummyItem.title));
+                mContentView.setText(resources.getString(dummyItem.content));
             }
         }
     }

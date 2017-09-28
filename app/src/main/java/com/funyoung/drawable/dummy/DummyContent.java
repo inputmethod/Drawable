@@ -1,5 +1,7 @@
 package com.funyoung.drawable.dummy;
 
+import com.funyoung.drawable.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,13 +25,25 @@ public class DummyContent {
      */
     public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-    private static final int COUNT = 25;
-
     static {
         // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
-        }
+        addItem(createDummyItem(1, R.string.item_color_drawable_title, R.string.item_color_drawable_content, R.string.item_color_drawable_detail));
+        addItem(createDummyItem(2, R.string.item_gradient_drawable_title, R.string.item_gradient_drawable_content, R.string.item_gradient_drawable_detail));
+        addItem(createDummyItem(3, R.string.item_bitmap_drawable_title, R.string.item_bitmap_drawable_content, R.string.item_bitmap_drawable_detail));
+        addItem(createDummyItem(4, R.string.item_nine_patch_drawable_title, R.string.item_nine_patch_drawable_content, R.string.item_nine_patch_drawable_detail));
+        addItem(createDummyItem(5, R.string.item_inset_drawable_title, R.string.item_inset_drawable_content, R.string.item_inset_drawable_detail));
+        addItem(createDummyItem(6, R.string.item_clip_drawable_title, R.string.item_clip_drawable_content, R.string.item_clip_drawable_detail));
+        addItem(createDummyItem(7, R.string.item_scale_drawable_title, R.string.item_scale_drawable_content, R.string.item_scale_drawable_detail));
+        addItem(createDummyItem(8, R.string.item_rotate_drawable_title, R.string.item_rotate_drawable_content, R.string.item_rotate_drawable_detail));
+        addItem(createDummyItem(9, R.string.item_animation_drawable_title, R.string.item_animation_drawable_content, R.string.item_animation_drawable_detail));
+        addItem(createDummyItem(10, R.string.item_layer_drawable_title, R.string.item_layer_drawable_content, R.string.item_layer_drawable_detail));
+        addItem(createDummyItem(11, R.string.item_level_drawable_title, R.string.item_level_drawable_content, R.string.item_level_drawable_detail));
+        addItem(createDummyItem(12, R.string.item_state_drawable_title, R.string.item_state_drawable_content, R.string.item_state_drawable_detail));
+        addItem(createDummyItem(13, R.string.item_transition_drawable_title, R.string.item_transition_drawable_content, R.string.item_transition_drawable_detail));
+    }
+
+    private static DummyItem createDummyItem(int id, int title, int content, int detail) {
+        return new DummyItem(String.valueOf(id), title, content, detail);
     }
 
     private static void addItem(DummyItem item) {
@@ -37,9 +51,6 @@ public class DummyContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
-    }
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
@@ -55,18 +66,20 @@ public class DummyContent {
      */
     public static class DummyItem {
         public final String id;
-        public final String content;
-        public final String details;
+        public final int title;
+        public final int content;
+        public final int details;
 
-        public DummyItem(String id, String content, String details) {
+        public DummyItem(String id, int title, int content, int details) {
             this.id = id;
+            this.title = title;
             this.content = content;
             this.details = details;
         }
 
         @Override
         public String toString() {
-            return content;
+            return id;
         }
     }
 }

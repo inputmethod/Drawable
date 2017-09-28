@@ -1,4 +1,4 @@
-package com.funyoung.drawable.dummy;
+package com.funyoung.drawable;
 
 /**
  * Created by yangfeng on 2017/9/26.

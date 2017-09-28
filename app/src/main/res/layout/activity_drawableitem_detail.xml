@@ -50,4 +50,8 @@
         app:layout_anchorGravity="top|end"
         app:srcCompat="@android:drawable/stat_notify_chat" />
 
+    <include layout="@layout/including_sound_volume_bar" />
+
+
+
 </android.support.design.widget.CoordinatorLayout>

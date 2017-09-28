@@ -1,4 +1,59 @@
 <resources>
     <string name="app_name">Drawable</string>
     <string name="title_drawableitem_detail">DrawableItem Detail</string>
+
+    <!-- http://www.cnblogs.com/sharecenter/p/5620967.html -->
+    <string name="item_color_drawable_title">ColorDrawable</string>
+    <string name="item_color_drawable_content">单色可绘制区域，固定一种颜色</string>
+    <string name="item_color_drawable_detail">ColorDrawable 是最简单的Drawable，它实际上是代表了单色可绘制区域，它包装了一种固定的颜色，当ColorDrawable被绘制到画布的时候会使用颜色填充Paint，在画布上绘制一块单色的区域。xml和java创建。</string>
+
+    <string name="item_gradient_drawable_title">GradientDrawable</string>
+    <string name="item_gradient_drawable_content">一个渐变区域, 可以实现线性渐变、发散渐变和平铺渐变效果</string>
+    <string name="item_gradient_drawable_detail">GradientDrawable 表示一个渐变区域，可以实现线性渐变、发散渐变和平铺渐变效果，在Android中可以使用GradientDrawable表示很多复杂而又绚丽的界面效果。</string>
+
+    <string name="item_bitmap_drawable_title">BitmapDrawable</string>
+    <string name="item_bitmap_drawable_content">对bitmap的一种包装，可以设置它包装的bitmap在BitmapDrawable区域内的绘制方式</string>
+    <string name="item_bitmap_drawable_detail">BitmapDrawable区域内的绘制方式，如平铺填充、拉伸填充或者保持图片原始大小，也可以在BitmapDrawable区域内部使用gravity指定的对齐方式。</string>
+
+    <string name="item_nine_patch_drawable_title">NinePatchDrawable</string>
+    <string name="item_nine_patch_drawable_content">“点九图”是Andriod平台的一种特殊的图片格式</string>
+    <string name="item_nine_patch_drawable_detail">android平台下使用“点九”图片处理技术，可以将图片横向和纵向同时进行拉伸，以实现在多分辨率下的完美显示效果。点九图片在拉伸时仍能保留图像的渐变质感和圆角的精细度。</string>
+
+    <string name="item_inset_drawable_title">InsetDrawable</string>
+    <string name="item_inset_drawable_content">一个drawable嵌入到另外一个drawable内部</string>
+    <string name="item_inset_drawable_detail">insetDrawable表示两个drawable和容器之间的边距。当控件需要的背景比实际的边框小的时候比较适合使用InsetDrawable。</string>
+
+    <string name="item_clip_drawable_title">ClipDrawable</string>
+    <string name="item_clip_drawable_content">对一个Drawable进行剪切操作，可以控制这个drawable的剪切区域，以及相相对于容器的对齐方式</string>
+    <string name="item_clip_drawable_detail">ClipDrawable 是对一个Drawable进行剪切操作，可以控制这个drawable的剪切区域，以及相相对于容器的对齐方式，android中的进度条就是使用一个ClipDrawable实现效果的，它根据level的属性值，决定剪切区域的大小。</string>
+
+    <string name="item_scale_drawable_title">ScaleDrawable</string>
+    <string name="item_scale_drawable_content">对一个Drawable进行缩放操作</string>
+    <string name="item_scale_drawable_detail"> ScaleDrawable是对一个Drawable进行缩放操作，可以根据level属性控制这个drawable的缩放比率，也可以设置它在容器中的对齐方式。</string>
+
+    <string name="item_rotate_drawable_title">RotateDrawable</string>
+    <string name="item_rotate_drawable_content">对一个Drawable进行旋转操作</string>
+    <string name="item_rotate_drawable_detail">RotateDrawable 是对一个Drawable进行旋转操作，可以根据level属性控制这个drawable旋转角度，也可以设置相对于它所在容器的对齐方式。</string>
+
+    <string name="item_animation_drawable_title">AnimationDrawable</string>
+    <string name="item_animation_drawable_content">AnimationDrawable 对应于Android中的帧动画</string>
+    <string name="item_animation_drawable_detail">把一系列的drawable按照一定的顺序，一帧一帧的播放，并且可以使用android:oneshot属性设置是否循环播放。</string>
+
+    <string name="item_layer_drawable_title">LayerDrawable</string>
+    <string name="item_layer_drawable_content">管理一组drawable，每个drawable都处于不同的层</string>
+    <string name="item_layer_drawable_detail">LayerDrawable 管理一组drawable，每个drawable都处于不同的层，当它们被绘制的时候，按照顺序全部都绘制到画布上。虽然这些drawable会有交差或者重叠的区域，但是它们是位于不同的层，彼此之间不会影响。</string>
+
+    <string name="item_level_drawable_title">LevelListDrawable</string>
+    <string name="item_level_drawable_content">管理一组drawable，每一个drawable都对应一个level范围</string>
+    <string name="item_level_drawable_detail">当它们被绘制的时候，根据level属性值选取对应的一个drawable绘制到画布上。</string>
+
+    <string name="item_state_drawable_title">StateListDrawable</string>
+    <string name="item_state_drawable_content">管理一组drawable，每一个drawable都对应着一组状态</string>
+    <string name="item_state_drawable_detail">状态的选择类似于java中的switch-case组合，按照顺序比较状态，当遇到匹配的状态后，就返回对应的drawable，因此需要把最精确的匹配放置在最前面，按照从精确到粗略的顺序排列。</string>
+
+    <string name="item_transition_drawable_title">TransitionDrawable</string>
+    <string name="item_transition_drawable_content">TransitionDrawable 是LayerDrawable的子类，它只负责管理两层drawable</string>
+    <string name="item_transition_drawable_detail">TransitionDrawable 是LayerDrawable的子类，不过它只负责管理两层drawable，并且提供了一个透明度变化的动画，可以控制从一层drawable过度到另外一层drawable的动画效果。</string>
+    <string name="sound_volume_bar_up">sound_volume_bar_up</string>
+    <string name="sound_volume_bar_low">sound_volume_bar_low</string>
 </resources>
