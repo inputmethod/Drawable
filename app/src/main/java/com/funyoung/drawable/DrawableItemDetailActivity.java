@@ -1,25 +1,20 @@
 package com.funyoung.drawable;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.funyoung.views.FixCrashSeekBar;
-import com.funyoung.views.SeekBarBackground;
-import com.funyoung.views.SeekBarProgress;
-import com.funyoung.views.SeekBarUtils;
+import com.funyoung.views.FlatCheckView;
 
 /**
  * An activity representing a single DrawableItem detail screen. This
@@ -97,13 +92,16 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
 
 
 
-    private FixCrashSeekBar soundSeek;
+    private FlatCheckView soundSeek;
     private void setup() {
-        soundSeek = (FixCrashSeekBar) findViewById(R.id.seekbar);
-        initSeekBar(getApplicationContext());
+        soundSeek = (FlatCheckView) findViewById(R.id.seekbar);
+        soundSeek.initSeekBar(getApplicationContext());
+        int normalColor = ContextCompat.getColor(this, R.color.colorPrimary);
+        int highlightColor = ContextCompat.getColor(this, R.color.colorAccent);
+        applyTheme(normalColor, highlightColor);
+
         soundSeek.setOnProgressChangeListener(mSeekBarChangeListener);
 
-        initValues();
     }
 
     private void initValues() {
@@ -142,58 +140,23 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         }
     }
 
-    FixCrashSeekBar.OnProgressChangeListener mSeekBarChangeListener = new FixCrashSeekBar.OnProgressChangeListener() {
+    FlatCheckView.OnProgressChangeListener mSeekBarChangeListener = new FlatCheckView.OnProgressChangeListener() {
         @Override
-        public void onProgressChanged(FixCrashSeekBar seekBar, boolean progress) {
+        public void onProgressChanged(FlatCheckView seekBar, boolean progress) {
             int id = seekBar.getId();
             saveValue(id, progress);
         }
     };
-
 
     public void refreshUi() {
         initValues();
     }
 
     public void applyTheme(int normalColor, int highlightColor) {
+        soundSeek.applyTrackColor(normalColor, highlightColor);
+//        soundSeek.applySeekThumbColor(normalColor, highlightColor, highlightColor);
+        soundSeek.applySeekThumbColor(Color.WHITE, Color.WHITE, Color.WHITE);
+
         refreshUi();
-        applySeekThumbColor(normalColor, highlightColor, highlightColor);
-        applyProgressColor(normalColor, highlightColor);
-    }
-
-    private SeekBarProgress seekBarProgress;
-    private SeekBarBackground seekBarBackground;
-    void initSeekBar(Context context) {
-        float density = context.getResources().getDisplayMetrics().density;
-        float radius = density * 7f;
-
-        seekBarProgress = new SeekBarProgress(context);
-//        GradientDrawable pressed = new GradientDrawable();
-//        pressed.setSize(size + 4, size + 4);
-//        pressed.setCornerRadius(size / 2 + 2);
-//        pressed.setColor(pressedColor);
-//        seekBarProgress = pressed
-
-        seekBarBackground = new SeekBarBackground(context);
-//        soundSeek.setMaxAndProgress(10, 0);
-        soundSeek.setDrawableProgress(seekBarProgress);
-        soundSeek.setDrawableBkg(seekBarBackground);
-
-        int progressColor = ContextCompat.getColor(context, R.color.colorAccent);
-        int highlightColor = ContextCompat.getColor(context, R.color.colorPrimary);
-        applySeekThumbColor(Color.WHITE, Color.WHITE, Color.WHITE);
-        applyProgressColor(progressColor, highlightColor);
-    }
-
-    private void applySeekThumbColor(int normalColor, int highlightStartColor, int highlightEndColor) {
-        float density = getResources().getDisplayMetrics().density;
-        int size = Math.round(20 * density);
-
-        soundSeek.setThumb(SeekBarUtils.getVolumeThumbDrawable(normalColor, highlightStartColor, highlightEndColor, size));
-    }
-
-    private void applyProgressColor(int normalColor, int highlightColor) {
-        seekBarBackground.setColor(normalColor);
-        seekBarProgress.setColor(highlightColor);
     }
 }

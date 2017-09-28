@@ -16,7 +16,7 @@
         android:contentDescription="@string/sound_volume_bar_low"
         android:src="@drawable/sound_volume_low"/>
 
-    <com.funyoung.views.FixCrashSeekBar
+    <com.funyoung.views.FlatCheckView
         android:id="@+id/seekbar"
         android:layout_width="38.33dp"
         android:layout_height="28.33dp"
