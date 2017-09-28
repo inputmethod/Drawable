@@ -90,12 +90,10 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     private FlatCheckView soundSeek;
     private void setup() {
         soundSeek = (FlatCheckView) findViewById(R.id.seekbar);
-        soundSeek.initSeekBar(getApplicationContext());
+//        soundSeek.initSeekBar(getApplicationContext());
         int normalColor = ContextCompat.getColor(this, R.color.colorPrimary);
         int highlightColor = ContextCompat.getColor(this, R.color.colorAccent);
         applyTheme(normalColor, highlightColor);

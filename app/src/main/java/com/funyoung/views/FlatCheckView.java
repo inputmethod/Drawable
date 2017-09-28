@@ -13,12 +13,12 @@ import android.view.View;
 
 public class FlatCheckView extends View {
     private boolean checked;
-
     private SeekBarUtils.SeekBarStateListDrawable mThumb;
     private SeekBarBackground mDrawableBkg;
     private SeekBarProgress mDrawableProgress;
     private int mStripMargin;
-    private float mStripHeight;
+    private float trackWidth;
+    private int thumbSize;
     private OnProgressChangeListener mOnProgressChangeListener;
 
     public FlatCheckView(Context context) {
@@ -33,8 +33,14 @@ public class FlatCheckView extends View {
 
     private void setUp(Context context) {
         float density = context.getResources().getDisplayMetrics().density;
-        mStripHeight = density * 14f;
+        trackWidth = density * 14f;
+        thumbSize = (int) (density * 20f);
         mStripMargin = 0; //Math.round(density * 10f);
+
+        mDrawableBkg = new SeekBarBackground(context);
+        mDrawableProgress = new SeekBarProgress(context);
+        mDrawableBkg.setRadius(trackWidth / 2);
+        mDrawableProgress.setRadius(trackWidth / 2);
     }
 
     public void setOnProgressChangeListener(OnProgressChangeListener onProgressChangeListener) {
@@ -78,9 +84,9 @@ public class FlatCheckView extends View {
         int height = getHeight();
 
         int l = mStripMargin;
-        int t = Math.round(height / 2 - mStripHeight / 2);
+        int t = Math.round(height / 2 - trackWidth / 2);
         int r = width - mStripMargin;
-        int b = Math.round(height / 2 + mStripHeight / 2);
+        int b = Math.round(height / 2 + trackWidth / 2);
 
         if (checked) {
             if (mDrawableProgress != null) {
@@ -187,15 +193,14 @@ public class FlatCheckView extends View {
         void onProgressChanged(FlatCheckView seekBar, boolean check);
     }
 
-    public void initSeekBar(Context context) {
-        mDrawableBkg = new SeekBarBackground(context);
-        mDrawableProgress = new SeekBarProgress(context);
-    }
+//    public void initSeekBar(Context context) {
+//        mDrawableBkg = new SeekBarBackground(context);
+//        mDrawableBkg.setRadius(trackWidth / 2);
+//        mDrawableProgress = new SeekBarProgress(context);
+//    }
 
     public void applySeekThumbColor(int normalColor, int highlightStartColor, int highlightEndColor) {
-        float density = getResources().getDisplayMetrics().density;
-        int size = Math.round(20 * density);
-        setThumb(SeekBarUtils.getVolumeThumbDrawable(normalColor, highlightStartColor, highlightEndColor, size));
+        setThumb(SeekBarUtils.getVolumeThumbDrawable(normalColor, highlightStartColor, highlightEndColor, thumbSize));
     }
 
     public void applyTrackColor(int normalColor, int highlightColor) {
