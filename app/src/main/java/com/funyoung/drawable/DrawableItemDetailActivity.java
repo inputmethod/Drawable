@@ -90,15 +90,15 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private FlatCheckView soundSeek;
+    private FlatCheckView soundSwitch;
     private void setup() {
-        soundSeek = (FlatCheckView) findViewById(R.id.seekbar);
-//        soundSeek.initSeekBar(getApplicationContext());
+        soundSwitch = (FlatCheckView) findViewById(R.id.seekbar);
+//        soundSwitch.initSeekBar(getApplicationContext());
         int normalColor = ContextCompat.getColor(this, R.color.colorPrimary);
         int highlightColor = ContextCompat.getColor(this, R.color.colorAccent);
         applyTheme(normalColor, highlightColor);
 
-        soundSeek.setOnProgressChangeListener(mSeekBarChangeListener);
+        soundSwitch.setOnCheckedListener(checkListener);
 
     }
 
@@ -118,13 +118,13 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
 //        mSoundVolume = Integer.parseInt(initMgr().getValue(SettingField.TYPING_SOUND_VOLUME));
         boolean mSoundVolume = getSharedPreferences(getPackageName(), MODE_PRIVATE).getBoolean("TYPING_SOUND_VOLUME", false);
         Log.d(TAG, "setValue sound " + mSoundVolume);
-        soundSeek.setProgress(mSoundVolume);
+        soundSwitch.setChecked(mSoundVolume);
     }
 
 //    private void soundSet(boolean value) {
-//        if (value != soundSeek.isEnabled()) {
-//            soundSeek.setEnabled(value);
-//            soundSeek.invalidate();
+//        if (value != soundSwitch.isEnabled()) {
+//            soundSwitch.setEnabled(value);
+//            soundSwitch.invalidate();
 //        }
 //    }
 
@@ -138,11 +138,11 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         }
     }
 
-    FlatCheckView.OnProgressChangeListener mSeekBarChangeListener = new FlatCheckView.OnProgressChangeListener() {
+    FlatCheckView.OnCheckedListener checkListener = new FlatCheckView.OnCheckedListener() {
         @Override
-        public void onProgressChanged(FlatCheckView seekBar, boolean progress) {
+        public void onCheckedChanged(FlatCheckView seekBar, boolean check) {
             int id = seekBar.getId();
-            saveValue(id, progress);
+            saveValue(id, check);
         }
     };
 
@@ -151,9 +151,9 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
     }
 
     public void applyTheme(int normalColor, int highlightColor) {
-        soundSeek.applyTrackColor(normalColor, highlightColor);
-//        soundSeek.applySeekThumbColor(normalColor, highlightColor, highlightColor);
-        soundSeek.applySeekThumbColor(Color.WHITE, Color.WHITE, Color.WHITE);
+        soundSwitch.applyTrackColor(normalColor, highlightColor);
+//        soundSwitch.applySeekThumbColor(normalColor, highlightColor, highlightColor);
+        soundSwitch.applySeekThumbColor(Color.WHITE, Color.WHITE, Color.WHITE);
 
         refreshUi();
     }

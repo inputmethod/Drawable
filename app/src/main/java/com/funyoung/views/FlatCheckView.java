@@ -19,7 +19,7 @@ public class FlatCheckView extends View {
     private int mStripMargin;
     private float trackWidth;
     private int thumbSize;
-    private OnProgressChangeListener mOnProgressChangeListener;
+    private OnCheckedListener mOnProgressChangeListener;
 
     public FlatCheckView(Context context) {
         super(context);
@@ -43,7 +43,7 @@ public class FlatCheckView extends View {
         mDrawableProgress.setRadius(trackWidth / 2);
     }
 
-    public void setOnProgressChangeListener(OnProgressChangeListener onProgressChangeListener) {
+    public void setOnCheckedListener(OnCheckedListener onProgressChangeListener) {
         mOnProgressChangeListener = onProgressChangeListener;
     }
 
@@ -67,9 +67,9 @@ public class FlatCheckView extends View {
         mStripMargin = margin;
     }
 
-    public void setProgress(boolean progress) {
-        checked = progress;
-        if (checked) {
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+        if (this.checked) {
             mThumb.setState(SeekBarUtils.State.STATE_NORMAL);
         } else {
             mThumb.setState(SeekBarUtils.State.STATE_DISABLED);
@@ -178,7 +178,7 @@ public class FlatCheckView extends View {
 
     private void handleActionUp(MotionEvent event) {
         checked = !checked;
-        mOnProgressChangeListener.onProgressChanged(this, checked);
+        mOnProgressChangeListener.onCheckedChanged(this, checked);
 
         mThumb.setState(SeekBarUtils.State.STATE_NORMAL);
         invalidate();
@@ -189,8 +189,8 @@ public class FlatCheckView extends View {
         invalidate();
     }
 
-    public interface OnProgressChangeListener {
-        void onProgressChanged(FlatCheckView seekBar, boolean check);
+    public interface OnCheckedListener {
+        void onCheckedChanged(FlatCheckView seekBar, boolean check);
     }
 
 //    public void initSeekBar(Context context) {
