@@ -4,6 +4,7 @@
     android:layout_width="75dp"
     android:layout_height="75dp"
     android:background="@drawable/bg_sound_item_container"
+    android:clickable="true"
     android:gravity="center">
         <TextView
             android:id="@+id/tv"
@@ -14,10 +15,11 @@
             />
         <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/sound_icon_view"
-            android:layout_width="@dimen/sound_panel_icon_size"
-            android:layout_height="@dimen/sound_panel_icon_size"
+            android:layout_width="@dimen/sound_fragment_icon_size"
+            android:layout_height="@dimen/sound_fragment_icon_size"
             android:layout_gravity="center"
             android:contentDescription="@string/item_4_sound_icon_view"
+            android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"/>
         <ImageView
             android:id="@+id/iv_select_indicator"

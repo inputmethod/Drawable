@@ -81,7 +81,7 @@ public class DrawableItemDetailFragment extends Fragment {
     private List<DataItem> dataSet ;
     public void init() {
         dataSet = DummyContent.generateData();
-        LinearLayoutManager llMgr = new GridLayoutManager(getContext(), 4);
+        LinearLayoutManager llMgr = new GridLayoutManager(getContext(), 3);
         mRv.setLayoutManager(llMgr);
         mAdapter = new ClipbdAdapter(getContext(), mRv, dataSet);
         mRv.setAdapter(mAdapter);
