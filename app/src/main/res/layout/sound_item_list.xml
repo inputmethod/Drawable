@@ -8,5 +8,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    android:background="@android:color/holo_red_light"
+    android:background="@color/colorPrimaryDark"
     tools:listitem="@layout/including_sound_4_item_container" />

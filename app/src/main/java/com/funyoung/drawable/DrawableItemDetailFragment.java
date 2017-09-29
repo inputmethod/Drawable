@@ -1,9 +1,11 @@
 package com.funyoung.drawable;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.funyoung.drawable.dummy.DummyContent;
 import com.funyoung.sound.ClipbdAdapter;
 import com.funyoung.sound.DataItem;
+import com.funyoung.sound.GridDivider;
 
 import java.util.List;
 
@@ -80,9 +83,14 @@ public class DrawableItemDetailFragment extends Fragment {
     private ClipbdAdapter mAdapter;
     private List<DataItem> dataSet ;
     public void init() {
+        Context context = getContext();
+        int columnNum = 3;
+        int pxDivider = context.getResources().getDimensionPixelOffset(R.dimen.sound_item_divider_height);
+        int colorDivider = ContextCompat.getColor(context, R.color.colorAccent);
         dataSet = DummyContent.generateData();
-        LinearLayoutManager llMgr = new GridLayoutManager(getContext(), 3);
+        LinearLayoutManager llMgr = new GridLayoutManager(context, columnNum);
         mRv.setLayoutManager(llMgr);
+        mRv.addItemDecoration(new GridDivider(context, pxDivider, colorDivider));
         mAdapter = new ClipbdAdapter(getContext(), mRv, dataSet);
         mRv.setAdapter(mAdapter);
     }

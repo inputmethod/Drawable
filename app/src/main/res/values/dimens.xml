@@ -8,4 +8,6 @@
     <dimen name="sound_panel_icon_size">40dp</dimen>
     <dimen name="sound_fragment_icon_size">56.67dp</dimen>
 
+    <dimen name="sound_item_divider_height">6dp</dimen>
+
 </resources>
