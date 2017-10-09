@@ -489,12 +489,12 @@ public class MyCanvas extends View {
         changePaint(mPaintOptions);
     }
 
-    private int getContrastColor(int colorToInvert) {
-        float[] hsv = new float[3];
-        Color.RGBToHSV(Color.red(colorToInvert), Color.green(colorToInvert),
-                Color.blue(colorToInvert), hsv);
-        hsv[0] = (hsv[0] + 180) % 360;
-        return Color.HSVToColor(hsv);
+    public static int getContrastColor(int colorToInvert) {
+        int a = ((colorToInvert >> 24) & 0xff);
+        int r = 255 - ((colorToInvert >> 16) & 0xff);
+        int g = 255 - ((colorToInvert >> 8) & 0xff);
+        int b = 255 - ((colorToInvert) & 0xff);
+        return (a << 24) + (r << 16) + (g << 8) + b;
     }
 
     private void changePaint(PaintOptions paintOptions) {
