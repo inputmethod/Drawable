@@ -1,8 +1,16 @@
 package com.funyoung.drawing;
 
+import android.app.Activity;
 import android.graphics.Path;
+import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.funyoung.drawable.R;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.security.InvalidParameterException;
 import java.util.LinkedList;
 
 /**
@@ -83,7 +91,46 @@ class MyPath : Path(), Serializable {
 }
  */
 public class MyPath extends Path implements Serializable {
-    private final LinkedList actions = new LinkedList();
+    private final LinkedList<Action> actions = new LinkedList();
+
+    private void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        inputStream.defaultReadObject();
+        for (Action action : actions) {
+            action.perform(this);
+        }
+    }
+
+    public void readObject(String pathData, Activity activity) {
+        String[] tokens = pathData.split(" ");
+        try {
+            int i = 0;
+            while (i < tokens.length) {
+                if (!TextUtils.isEmpty(tokens[i])) {
+                    char ch = tokens[i].charAt(0);
+                    if (ch == 'M') {
+                        addAction(new Move(tokens[i]));
+                    } else if (ch == 'L') {
+                        addAction(new Line(tokens[i]));
+                    } else if (ch == 'Q') {
+                        // Quad actions are of the following form:
+                        // "Qx1,y1 x2,y2"
+                        // Since we split the tokens by whitespace, we need to join them again
+                        if (i + 1 >= tokens.length) {
+                            throw new InvalidParameterException("Error parsing the data for a Quad.");
+                        }
+
+                        addAction(new Quad(tokens[i] + " " + tokens[i + 1]));
+                        ++i;
+                    }
+                }
+                ++i;
+            }
+        } catch (Exception e) {
+            if (null != activity && !activity.isFinishing()) {
+                Toast.makeText(activity, R.string.unknown_error_occurred, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     @Override
     public void reset() {

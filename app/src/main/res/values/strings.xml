@@ -58,4 +58,7 @@
     <string name="sound_volume_bar_low">sound_volume_bar_low</string>
     <string name="item_4_sound_icon_view">item_4_sound_icon_view</string>
     <string name="item_4_select_indicator">item_4_select_indicator</string>
+
+    <string name="unknown_error_occurred">An unknown error occurred</string>
+    <string name="failed_to_load_image">Failed to load image %s</string>
 </resources>
