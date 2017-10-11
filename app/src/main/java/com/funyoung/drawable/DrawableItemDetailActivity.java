@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.funyoung.views.FlatCheckView;
+import com.funyoung.views.OnCheckedListener;
 
 /**
  * An activity representing a single DrawableItem detail screen. This
@@ -138,9 +139,9 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         }
     }
 
-    FlatCheckView.OnCheckedListener checkListener = new FlatCheckView.OnCheckedListener() {
+    OnCheckedListener checkListener = new OnCheckedListener() {
         @Override
-        public void onCheckedChanged(FlatCheckView seekBar, boolean check) {
+        public void onCheckedChanged(View seekBar, boolean check) {
             int id = seekBar.getId();
             saveValue(id, check);
         }
