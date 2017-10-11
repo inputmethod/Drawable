@@ -154,7 +154,7 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
     public void applyTheme(int normalColor, int highlightColor) {
         soundSwitch.applyTrackColor(normalColor, highlightColor);
 //        soundSwitch.applySeekThumbColor(normalColor, highlightColor, highlightColor);
-        soundSwitch.applySeekThumbColor(Color.WHITE, Color.WHITE, Color.WHITE);
+        soundSwitch.applyThumbColor(Color.WHITE, highlightColor);
 
         refreshUi();
     }
