@@ -109,16 +109,22 @@ public class FlatCheckView extends View {
         roundRect.right = r;
         roundRect.bottom = b;
 
+        final int centerY = height / 2;
+
+        final float centerX;
+        final int trackColor;
         if (checked) {
-            paint.setColor(trackColorOn);
+            trackColor = trackColorOn;
+            centerX = width - mStripMargin - (thumbRadius - 1);
         } else {
-            paint.setColor(trackColorOff);
+            trackColor = trackColorOff;
+            centerX = mStripMargin + (thumbRadius - 1);
         }
+
+        paint.setColor(trackColor);
         canvas.drawRoundRect(roundRect, trackRadius, trackRadius, paint);
 
-        int centerY = height / 2;
         paint.setColor(thumbColor);
-        float centerX = checked ? width - mStripMargin - (thumbRadius - 1) : mStripMargin + (thumbRadius - 1);
         canvas.drawCircle(centerX, centerY, thumbRadius, paint);
     }
 
