@@ -189,10 +189,6 @@ public class FlatCheckView extends View {
         invalidate();
     }
 
-    public interface OnCheckedListener {
-        void onCheckedChanged(FlatCheckView seekBar, boolean check);
-    }
-
 //    public void initSeekBar(Context context) {
 //        mDrawableBkg = new SeekBarBackground(context);
 //        mDrawableBkg.setRadius(trackWidth / 2);
