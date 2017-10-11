@@ -1,12 +1,10 @@
 package com.funyoung.views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -18,16 +16,20 @@ import android.view.View;
 public class FlatCheckView extends View {
     private boolean checked;
 //    private SeekBarUtils.SeekBarStateListDrawable mThumb;
-    private SeekBarBackground mDrawableBkg;
-    private SeekBarProgress mDrawableProgress;
+//    private SeekBarBackground mDrawableBkg;
+//    private SeekBarProgress mDrawableProgress;
     private int mStripMargin;
-    private float trackWidth;
+    private float trackRadius;
     private float thumbRadius;
     private OnCheckedListener mOnProgressChangeListener;
 
     private Paint paint;
     private int thumbColor = Color.WHITE;
     private int thumbShadowColor = Color.BLACK;
+
+    private int trackColorOff = Color.GRAY;
+    private int trackColorOn = Color.RED;
+    private final RectF roundRect = new RectF();
 
     public FlatCheckView(Context context) {
         super(context);
@@ -41,14 +43,14 @@ public class FlatCheckView extends View {
 
     private void setUp(Context context) {
         float density = context.getResources().getDisplayMetrics().density;
-        trackWidth = density * 14f;
+        trackRadius = density * 7f;
         thumbRadius = density * 10f;
         mStripMargin = 0; //Math.round(density * 10f);
 
-        mDrawableBkg = new SeekBarBackground(context);
-        mDrawableProgress = new SeekBarProgress(context);
-        mDrawableBkg.setRadius(trackWidth / 2);
-        mDrawableProgress.setRadius(trackWidth / 2);
+//        mDrawableBkg = new SeekBarBackground(context);
+//        mDrawableProgress = new SeekBarProgress(context);
+//        mDrawableBkg.setRadius(trackWidth / 2);
+//        mDrawableProgress.setRadius(trackWidth / 2);
 
         float thumbShadowRadius = density * 8;
         float thumbShadowDelta = density * 4;
@@ -61,13 +63,13 @@ public class FlatCheckView extends View {
         mOnProgressChangeListener = onProgressChangeListener;
     }
 
-    public void setDrawableProgress(SeekBarProgress drawableProgress) {
-        mDrawableProgress = drawableProgress;
-    }
-
-    public void setDrawableBkg(SeekBarBackground drawableBkg) {
-        mDrawableBkg = drawableBkg;
-    }
+//    public void setDrawableProgress(SeekBarProgress drawableProgress) {
+//        mDrawableProgress = drawableProgress;
+//    }
+//
+//    public void setDrawableBkg(SeekBarBackground drawableBkg) {
+//        mDrawableBkg = drawableBkg;
+//    }
 
 //    public SeekBarUtils.SeekBarStateListDrawable getThumb() {
 //        return mThumb;
@@ -98,77 +100,27 @@ public class FlatCheckView extends View {
         int height = getHeight();
 
         int l = mStripMargin;
-        int t = Math.round(height / 2 - trackWidth / 2);
+        int t = Math.round(height / 2 - trackRadius);
         int r = width - mStripMargin;
-        int b = Math.round(height / 2 + trackWidth / 2);
+        int b = Math.round(height / 2 + trackRadius);
+
+        roundRect.left = l;
+        roundRect.top = t;
+        roundRect.right = r;
+        roundRect.bottom = b;
 
         if (checked) {
-            if (mDrawableProgress != null) {
-                mDrawableProgress.setBounds(l, t, r, b);
-                mDrawableProgress.draw(canvas);
-            }
+            paint.setColor(trackColorOn);
         } else {
-            if (mDrawableBkg != null) {
-                mDrawableBkg.setBounds(l, t, r, b);
-                mDrawableBkg.draw(canvas);
-            }
+            paint.setColor(trackColorOff);
         }
+        canvas.drawRoundRect(roundRect, trackRadius, trackRadius, paint);
 
-//        if (mThumb != null) {
-            int centerY = height / 2;
-//            Drawable drawable = mThumb.getCurrent();
-//            int drawableWidth = drawable.getIntrinsicWidth();
-//            int drawableHeight = drawable.getIntrinsicHeight();
-
-//            if (checked) {
-//                l = width - mStripMargin - drawableWidth;
-//                r = width - mStripMargin;
-//            } else {
-//                l = mStripMargin;
-//                r = mStripMargin + drawableWidth;
-//            }
-
-//            t = centerY - drawableHeight / 2;
-//            b = centerY + drawableHeight / 2;
-
-//            drawable.setBounds(l, t, r, b);
-//            drawable.draw(canvas);
-
-//            canvas.drawBitmap(drawableToBitmap(drawable), l, t, paint);
-
+        int centerY = height / 2;
         paint.setColor(thumbColor);
-            float centerX = checked ? width - mStripMargin - (thumbRadius - 1) : mStripMargin + (thumbRadius - 1);
-//        setLayerType(LAYER_TYPE_SOFTWARE, null);//对单独的View在运行时阶段禁用硬件加速
-            canvas.drawCircle(centerX, centerY, thumbRadius, paint);
-//        }
+        float centerX = checked ? width - mStripMargin - (thumbRadius - 1) : mStripMargin + (thumbRadius - 1);
+        canvas.drawCircle(centerX, centerY, thumbRadius, paint);
     }
-    public static Bitmap drawableToBitmap(Drawable drawable) {
-        // 取 drawable 的长宽
-        int w = drawable.getIntrinsicWidth();
-        int h = drawable.getIntrinsicHeight();
-
-        // 取 drawable 的颜色格式
-        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                : Bitmap.Config.RGB_565;
-        // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
-        // 建立对应 bitmap 的画布
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, w, h);
-        // 把 drawable 内容画到画布中
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
-//    @Override
-//    public void setEnabled(boolean enabled) {
-//        super.setEnabled(enabled);
-//        if (enabled) {
-//            mThumb.setState(SeekBarUtils.State.STATE_NORMAL);
-//        } else {
-//            mThumb.setState(SeekBarUtils.State.STATE_DISABLED);
-//        }
-//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -226,12 +178,6 @@ public class FlatCheckView extends View {
         invalidate();
     }
 
-    //    public void initSeekBar(Context context) {
-//        mDrawableBkg = new SeekBarBackground(context);
-//        mDrawableBkg.setRadius(trackWidth / 2);
-//        mDrawableProgress = new SeekBarProgress(context);
-//    }
-
     public void applyThumbColor(int color, int shadowColor) {
         thumbColor = color;
         if (thumbColor != shadowColor) {
@@ -242,7 +188,7 @@ public class FlatCheckView extends View {
     }
 
     public void applyTrackColor(int normalColor, int highlightColor) {
-        mDrawableBkg.setColor(normalColor);
-        mDrawableProgress.setColor(highlightColor);
+        trackColorOff = normalColor;
+        trackColorOn = highlightColor;
     }
 }
