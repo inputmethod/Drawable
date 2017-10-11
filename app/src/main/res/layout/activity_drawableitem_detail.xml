@@ -52,4 +52,13 @@
 
     <include layout="@layout/including_sound_volume_bar" />
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardItem"
+        android:layout_width="107dp"
+        android:layout_height="107dp"
+        android:layout_gravity="bottom|center_horizontal"
+        >
+        <include layout="@layout/item_sound_card_2_7" />
+    </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>
