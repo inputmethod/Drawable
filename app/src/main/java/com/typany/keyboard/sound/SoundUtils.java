@@ -23,11 +23,12 @@ public class SoundUtils {
     }
 
     public static SoundItem convert(SoundSkinItem item) {
-        SoundItem soundItem = new SoundItem(item.getId(), item.getSn(), false);
+        SoundItem soundItem = new SoundItem(item.getId(), null, false);
         soundItem.setRemote(true);
         soundItem.setRemoteFileSize(item.getFs());
         soundItem.setRemoteUrl(item.getSdu());
         soundItem.setPreviewUrl(item.getPpu());
+        soundItem.setRemoteName(item.getSn());
         return soundItem;
     }
 

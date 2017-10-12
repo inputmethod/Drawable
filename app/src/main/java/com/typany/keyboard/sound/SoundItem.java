@@ -10,11 +10,19 @@ public class SoundItem {
     private boolean selected = false;
 
     private boolean isRemote = false;
-//    private int remoteId; // reuse reportId
-//    private String remoteName; // reuse folder
+//    private int remoteId; // reuse reportId, reversed native id within 1000
+    private String remoteName; // not reuse folder
     private long remoteFileSize;
     private String remoteUrl;
     private String previewUrl;
+
+    public String getRemoteName() {
+        return remoteName;
+    }
+
+    public void setRemoteName(String remoteName) {
+        this.remoteName = remoteName;
+    }
 
     public long getRemoteFileSize() {
         return remoteFileSize;
