@@ -8,4 +8,8 @@
 
     <color name="transparent">#00000000</color>
     <color name="black_87">#C8000000</color>
+
+    <color name="bg_color_retry_start">#876BFF</color>
+    <color name="bg_color_retry_end">#4683FF</color>
+    <color name="item_bg_pressed_2_7">#24AFAEC3</color>
 </resources>

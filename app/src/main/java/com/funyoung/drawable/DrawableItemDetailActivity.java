@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.funyoung.views.FlatCheckView;
 import com.funyoung.views.OnCheckedListener;
+import com.funyoung.views.ProgressBarView;
 
 /**
  * An activity representing a single DrawableItem detail screen. This
@@ -26,6 +27,8 @@ import com.funyoung.views.OnCheckedListener;
 public class DrawableItemDetailActivity extends AppCompatActivity {
 
     private static final String TAG = DrawableItemDetailActivity.class.getSimpleName();
+
+    private ProgressHandler progressHandler = new ProgressHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,29 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
 
         soundSwitch.setOnCheckedListener(checkListener);
 
+        View cardItem = findViewById(R.id.cardItem);
+        final View downloadingMask = findViewById(R.id.downloading_layout);
+        final ProgressBarView progressBarView = (ProgressBarView) cardItem.findViewById(R.id.view);
+        cardItem.setClickable(true);
+        cardItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadingMask.setVisibility(View.VISIBLE);
+                progressHandler.sendEmptyMessageDelayed(ProgressHandler.UPDATE, ProgressHandler.TIME);
+            }
+        });
+
+        progressHandler.setProgress(new ProgressHandler.Progress() {
+            @Override
+            public void setSchedule(int schedule) {
+                progressBarView.setCurrentProgress(schedule);
+            }
+
+            @Override
+            public void onSuccess() {
+                downloadingMask.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void initValues() {
@@ -153,8 +179,7 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
 
     public void applyTheme(int normalColor, int highlightColor) {
         soundSwitch.applyTrackColor(normalColor, highlightColor);
-//        soundSwitch.applySeekThumbColor(normalColor, highlightColor, highlightColor);
-        soundSwitch.applySeekThumbColor(Color.WHITE, Color.WHITE, Color.WHITE);
+        soundSwitch.applyThumbColor(Color.WHITE, highlightColor);
 
         refreshUi();
     }
