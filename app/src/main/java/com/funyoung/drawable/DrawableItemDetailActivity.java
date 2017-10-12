@@ -17,6 +17,7 @@ import android.view.View;
 import com.funyoung.views.FlatCheckView;
 import com.funyoung.views.OnCheckedListener;
 import com.funyoung.views.ProgressBarView;
+import com.typany.keyboard.sound.SoundHttp;
 
 /**
  * An activity representing a single DrawableItem detail screen. This
@@ -29,6 +30,7 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
     private static final String TAG = DrawableItemDetailActivity.class.getSimpleName();
 
     private ProgressHandler progressHandler = new ProgressHandler();
+    private DrawableItemDetailFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putString(DrawableItemDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(DrawableItemDetailFragment.ARG_ITEM_ID));
-            DrawableItemDetailFragment fragment = new DrawableItemDetailFragment();
+            fragment = new DrawableItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.drawableitem_detail_container, fragment)
@@ -111,6 +113,7 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         cardItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadRemoteSound();
                 downloadingMask.setVisibility(View.VISIBLE);
                 progressHandler.sendEmptyMessageDelayed(ProgressHandler.UPDATE, ProgressHandler.TIME);
             }
@@ -182,5 +185,9 @@ public class DrawableItemDetailActivity extends AppCompatActivity {
         soundSwitch.applyThumbColor(Color.WHITE, highlightColor);
 
         refreshUi();
+    }
+
+    private void loadRemoteSound() {
+        SoundHttp.requestSoundInfo(this, fragment);
     }
 }

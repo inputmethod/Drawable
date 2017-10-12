@@ -2,6 +2,7 @@ package com.funyoung.drawable.dummy;
 
 import com.funyoung.drawable.R;
 import com.funyoung.sound.DataItem;
+import com.typany.keyboard.sound.SoundItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,6 +82,11 @@ public class DummyContent {
             item.str = ICONS.get(i % ICONS.size());
             result.add(item);
         }
+        return result;
+    }
+
+    public static List<SoundItem> generateSoundData() {
+        List<SoundItem> result = new ArrayList<>();
         return result;
     }
 

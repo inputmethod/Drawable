@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.funyoung.drawable.dummy.DummyContent;
-import com.funyoung.sound.ClipbdAdapter;
-import com.funyoung.sound.DataItem;
+import com.funyoung.sound.SoundAdapter;
 import com.funyoung.sound.GridDivider;
+import com.typany.keyboard.sound.SoundHttp;
+import com.typany.keyboard.sound.SoundItem;
+import com.typany.keyboard.sound.SoundSkinItem;
 
 import java.util.List;
 
@@ -27,7 +30,7 @@ import java.util.List;
  * in two-pane mode (on tablets) or a {@link DrawableItemDetailActivity}
  * on handsets.
  */
-public class DrawableItemDetailFragment extends Fragment {
+public class DrawableItemDetailFragment extends Fragment implements SoundHttp.OnSoundRequestListener{
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -80,18 +83,28 @@ public class DrawableItemDetailFragment extends Fragment {
     }
 
     private RecyclerView mRv;
-    private ClipbdAdapter mAdapter;
-    private List<DataItem> dataSet ;
+    private SoundAdapter mAdapter;
+    private List<SoundItem> dataSet ;
     public void init() {
         Context context = getContext();
         int columnNum = 3;
         int pxDivider = context.getResources().getDimensionPixelOffset(R.dimen.sound_item_divider_height);
         int colorDivider = ContextCompat.getColor(context, R.color.colorAccent);
-        dataSet = DummyContent.generateData();
+        dataSet = DummyContent.generateSoundData();
         LinearLayoutManager llMgr = new GridLayoutManager(context, columnNum);
         mRv.setLayoutManager(llMgr);
         mRv.addItemDecoration(new GridDivider(context, pxDivider, colorDivider));
-        mAdapter = new ClipbdAdapter(getContext(), mRv, dataSet);
+        mAdapter = new SoundAdapter(getContext(), mRv, dataSet);
         mRv.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onLoaded(List<SoundSkinItem> itemList) {
+        mAdapter.addSoundSkinList(itemList);
+    }
+
+    @Override
+    public void onError(String message) {
+        Snackbar.make(mRv, message, Snackbar.LENGTH_INDEFINITE).show();
     }
 }
