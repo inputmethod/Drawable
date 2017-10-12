@@ -2,6 +2,7 @@ package com.funyoung.sound;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.util.Log;
@@ -53,12 +54,14 @@ public class SoundAdapter extends Adapter<ViewHolder>{
     public SoundAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(this.mCtx, layout.including_sound_3_item_container, null);
         SoundAdapter.ViewHolder holder = new SoundAdapter.ViewHolder(view);
-        view.setTag(holder);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null != mOnClipDataClickListener) {
-//                    mOnClipDataClickListener.onClipData();
+                SoundItem model = (SoundItem) view.getTag();
+                if (null == mOnClipDataClickListener) {
+                    Snackbar.make(view, model.toString(), Snackbar.LENGTH_SHORT).show();
+                } else {
+                    mOnClipDataClickListener.onClipData(model.toString());
                 }
             }
         });
@@ -94,8 +97,6 @@ public class SoundAdapter extends Adapter<ViewHolder>{
             super(itemView);
             this.icon = itemView.findViewById(id.sound_icon_view);
             this.indicator = itemView.findViewById(id.iv_select_indicator);
-
-            itemView.setTag(this);
         }
 
         public void bind(SoundItem model) {

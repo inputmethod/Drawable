@@ -98,8 +98,8 @@ public class SoundSkinItem {
         if (null != jsonObject) {
             SoundSkinItem item = new SoundSkinItem();
             item.sdu = combineUrl(baseResUrl, jsonObject.optString("sdu"));
+            item.ppu = combineUrl(baseResUrl, jsonObject.optString("ppu"));
             item.fs = jsonObject.optLong("fs");
-            item.ppu = jsonObject.optString("ppu");
             item.id = jsonObject.optInt("id");
             item.sn = jsonObject.optString("sn");
 
