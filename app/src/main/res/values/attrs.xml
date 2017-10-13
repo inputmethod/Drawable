@@ -1,8 +1,5 @@
 <resources>
-
-
     <declare-styleable name="CirclesProgressBar">
-
         <attr name="circlesWidth" format="dimension" />
         <attr name="circlesColor" format="color" />
         <attr name="textCrude" format="dimension" />

@@ -37,7 +37,7 @@ public class SoundHttp {
 
     // http://10.152.102.239:8080/api/soundres
     public static void requestSoundInfo(Context context, OnSoundRequestListener listener) {
-        final String url = "http://10.152.102.239:8080/api/" + SoundUtils.requestSoundApiSuffix(context);
+        final String url = "http://10.152.102.239:8080/api/" + SoundUtils.requestSoundApiSuffix(context, 1);
         // todo: uncomment below final url
         //final String url = GlobalConfiguration.getBaseWebSiteUrl(context) + AlarmUtils.requestAlarmApiSuffix(context);
         requestSoundInfo(context, url, listener);

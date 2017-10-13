@@ -14,10 +14,10 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 public class SoundUtils {
     private final static String TAG = SoundUtils.class.getSimpleName();
 
-    public static String requestSoundApiSuffix(Context context) {
+    public static String requestSoundApiSuffix(Context context, int page) {
 //        String tail = new BasicInfo(context).getDownLoadParam();
-//        String suffix = "notifications?id=" + getLastRequestId(context)+"&"+tail;
-//        Log.d(TAG, "requestAlarmApiSuffix, suffix = " + suffix);
+//        String suffix = "soundres?page=" + page +"&"+tail;
+//        Log.d(TAG, "requestSoundApiSuffix, suffix = " + suffix);
 //        return suffix;
         return "soundres";
     }
