@@ -61,4 +61,7 @@
 
     <string name="unknown_error_occurred">An unknown error occurred</string>
     <string name="failed_to_load_image">Failed to load image %s</string>
+
+
+    <string name="emoji_back">Back</string>
 </resources>

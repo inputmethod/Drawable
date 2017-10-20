@@ -2,6 +2,7 @@ package com.funyoung.drawing;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,10 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
 
     private ImageView eraser;
     private ImageView undo;
+    private ImageView reset;
+
+    private View back;
+    private View send;
 
     private int color = 0;
     private float strokeWidth = 0f;
@@ -36,11 +41,19 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
 //        stroke_width_bar.progress = strokeWidth.toInt();
 //        color_picker.setOnClickListener { pickColor(); }
 
-        undo = (ImageView) findViewById(R.id.undo);
+        undo = (ImageView) findViewById(R.id.btn_undo);
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 my_canvas.undo();
+            }
+        });
+
+        reset = (ImageView) findViewById(R.id.btn_reset);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                my_canvas.clearCanvas();
             }
         });
 
@@ -52,6 +65,11 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
             }
         });
 
+        back = findViewById(R.id.btn_back);
+        back.setOnClickListener(mBackClickListener);
+
+        send = findViewById(R.id.btn_send);
+        send.setOnClickListener(sendDrawingListener);
         /*
         storeStoragePaths()
 
@@ -74,6 +92,8 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
 
         setBackgroundColor(config.getCanvasBackgroundColor());
         setColor(config.getBrushColor());
+
+        pathsChanged(0);
     }
 
     private void setColor(int pickedColor) {
@@ -97,6 +117,7 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
     private void setBackgroundColor(int pickedColor) {
         int contrastColor = MyCanvas.getContrastColor(pickedColor);
         undo.setColorFilter(contrastColor, PorterDuff.Mode.SRC_IN);
+        reset.setColorFilter(contrastColor, PorterDuff.Mode.SRC_IN);
         eraser.setColorFilter(contrastColor, PorterDuff.Mode.SRC_IN);
         my_canvas.updateBackgroundColor(pickedColor);
 //        suggestedFileExtension = PNG;
@@ -106,8 +127,39 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
     public void pathsChanged(int cnt) {
         if (cnt > 0) {
             undo.setVisibility(View.VISIBLE);
+            reset.setVisibility(View.VISIBLE);
+            eraser.setVisibility(View.VISIBLE);
+            send.setEnabled(true);
         } else {
             undo.setVisibility(View.GONE);
+            reset.setVisibility(View.GONE);
+            eraser.setVisibility(View.GONE);
+            send.setEnabled(false);
         }
+    }
+
+    private View.OnClickListener sendDrawingListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            sendDrawing();
+        }
+    };
+
+    private void sendDrawing() {
+        // todo:
+        Snackbar.make(my_canvas, "Generating image to send ...", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private View.OnClickListener mBackClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            hide();
+        }
+    };
+
+    private void hide() {
+        // do nothing but show toast
+        Snackbar.make(my_canvas, "Back to origin ...", Snackbar.LENGTH_SHORT).show();
     }
 }

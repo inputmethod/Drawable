@@ -12,4 +12,7 @@
     <color name="bg_color_retry_start">#876BFF</color>
     <color name="bg_color_retry_end">#4683FF</color>
     <color name="item_bg_pressed_2_7">#24AFAEC3</color>
+
+    <color name="emoji_divider_color">#cbcbcb</color>
+    <color name="divier_bkg">#cbcbcb</color>
 </resources>
