@@ -1,5 +1,6 @@
 package com.funyoung.drawing;
 
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -8,12 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.funyoung.drawable.R;
+import com.funyoung.utilities.SLog;
 
 /**
  * Created by yangfeng on 2017/10/8.
  */
 
 public class DrawingActivity extends AppCompatActivity implements MyCanvas.PathsChangedListener {
+    private static final String TAG = DrawingActivity.class.getSimpleName();
+
     private Config config;
 
     private MyCanvas my_canvas;
@@ -148,6 +152,17 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
     private void sendDrawing() {
         // todo:
         Snackbar.make(my_canvas, "Generating image to send ...", Snackbar.LENGTH_SHORT).show();
+        Bitmap bitmap = my_canvas.getBitmap();
+        if (null == bitmap) {
+            SLog.w(TAG, "sendDrawing, failed to get bitmap from canvas.");
+        } else {
+            String savedPath = DrawBoardUtils.saveDraftBitmap(this, bitmap);
+            startSending(savedPath);
+        }
+    }
+
+    private void startSending(String savedPath) {
+        Snackbar.make(my_canvas, "startSending saved jpeg file: " + savedPath, Snackbar.LENGTH_SHORT).show();
     }
 
     private View.OnClickListener mBackClickListener = new View.OnClickListener() {
