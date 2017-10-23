@@ -15,18 +15,24 @@
             android:id="@+id/tv_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="44dp"
             android:text="White Theme"
             />
         <TextView
             android:id="@+id/tv_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="44dp"
             android:text="Blue Theme"
             />
         <TextView
             android:id="@+id/tv_dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="44dp"
             android:text="Dark Theme"
             />
 
@@ -34,6 +40,8 @@
             android:id="@+id/tv_customize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="44dp"
             android:text="Customize Theme"
             />
     </LinearLayout>
@@ -138,7 +146,21 @@
                 android:layout_toLeftOf="@id/btn_send"
                 android:layout_toStartOf="@id/btn_send"
                 android:background="@color/divier_bkg" />
-
         </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/drawboard_guide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66000000"
+            >
+            <ImageView
+                android:id="@+id/drawboard_guide_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/drawboard_guide_image_animation"
+                />
+        </FrameLayout>
     </RelativeLayout>
 </RelativeLayout>

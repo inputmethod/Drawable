@@ -3,7 +3,13 @@ package com.funyoung.drawing;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.funyoung.drawable.R;
 import com.funyoung.utilities.SLog;
 
 import java.io.File;
@@ -56,7 +62,26 @@ public class DrawBoardUtils {
         return drawboardDir;
     }
 
-    public static String saveDraftBitmap(Context context, Bitmap bitmap) {
+    public static Bitmap scaleBitmap(Bitmap originBitmap) {
+        int originWidth = originBitmap.getWidth();
+        if (originWidth > BITMAP_TARGET_WIDTH) {
+            int originHeight = originBitmap.getHeight();
+            int width = BITMAP_TARGET_WIDTH;
+            int height = (int) (0.5 + 1f * BITMAP_TARGET_WIDTH * originHeight / originWidth);
+//            Matrix matrix = new Matrix();
+//            matrix.postScale(width, height);
+//            Bitmap bitmap = Bitmap.createBitmap(originBitmap, 0, 0, width, height, matrix, true);
+            Bitmap bitmap = Bitmap.createScaledBitmap(originBitmap, width, height, true);
+            SLog.i(TAG, "saveDraftBitmap, scale bitmap from " + originWidth + "x" + originHeight
+                    + " to " + width + "x" + height);
+            originBitmap.recycle();
+            return bitmap;
+        } else {
+            return originBitmap;
+        }
+    }
+
+    public static String saveDraftBitmap(Context context, Bitmap originBitmap) {
         File rootPath = getExternalDrawBoardDir(context) ;
         if (null == rootPath) {
             SLog.e(TAG, "saveDraftBitmap, failed to get folder path.");
@@ -70,21 +95,7 @@ public class DrawBoardUtils {
             }
         }
 
-//        Bitmap bitmap;
-//        int originWidth = originBitmap.getWidth();
-//        if (originWidth > BITMAP_TARGET_WIDTH) {
-//            int originHeight = originBitmap.getHeight();
-//            int width = BITMAP_TARGET_WIDTH;
-//            int height = (int) (0.5 + 1f * BITMAP_TARGET_WIDTH * originHeight / originWidth);
-//            Matrix matrix = new Matrix();
-//            matrix.postScale(width, height);
-//            bitmap = Bitmap.createBitmap(originBitmap, 0, 0, width, height, matrix, false);
-//            SLog.i(TAG, "saveDraftBitmap, scale bitmap from " + originWidth + "x" + originHeight
-//                    + " to " + width + "x" + height);
-//            originBitmap.recycle();
-//        } else {
-//            bitmap = originBitmap;
-//        }
+        Bitmap bitmap = scaleBitmap(originBitmap);
 
         String path = new File(rootPath, DRAFT_DRAWING_FILE_NAME).getAbsolutePath();
         FileOutputStream fos = null;
@@ -101,4 +112,33 @@ public class DrawBoardUtils {
         }
         return null;
     }
+
+    public static void checkAndShowGuide(Context context, View guideLayout, ImageView animationView, View.OnClickListener listener, Config config) {
+        if (isNewDrawBoard(config)) {
+            guideLayout.setVisibility(View.VISIBLE);
+            guideLayout.setOnClickListener(listener);
+
+            Glide.with(context).onDestroy();
+            Glide.get(context).with(context)
+                    .load(R.mipmap.drawboard_guide_image_animation)
+//                .asGif()
+                    .priority(Priority.HIGH)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(animationView);
+            animationView.setBackground(null);
+        } else {
+            guideLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private static boolean isNewDrawBoard(Config config) {
+        return !config.isStartUseDrawBoard() || FORCE_SHOW_GUIDE;
+    }
+
+    public static void startUseDrawBoard(View guideView, Config config) {
+        guideView.setVisibility(View.GONE);
+        config.setStartUseDrawBoard(true);
+    }
+
+    private static final boolean FORCE_SHOW_GUIDE = true;
 }

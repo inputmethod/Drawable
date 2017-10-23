@@ -1,6 +1,7 @@
 package com.funyoung.drawing;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 
 import com.funyoung.drawable.R;
 import com.funyoung.utilities.SLog;
+
+import java.util.Random;
 
 /**
  * Created by yangfeng on 2017/10/8.
@@ -28,6 +31,7 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
 
     private View back;
     private View send;
+
 
     private int color = 0;
     private float strokeWidth = 0f;
@@ -89,15 +93,41 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
         checkWhatsNewDialog()
          */
 
+        guideLayout = findViewById(R.id.drawboard_guide);
+        guideAnimation = (ImageView) findViewById(R.id.drawboard_guide_image);
+
+        listener(R.id.tv_white, R.color.white);
+        listener(R.id.tv_blue, R.color.blue);
+        listener(R.id.tv_dark, R.color.dark);
+        listener(R.id.tv_customize, R.color.customize);
+
         config = new Config(getApplicationContext());
 
         strokeWidth = config.getBrushSize();
         my_canvas.setStrokeWidth(strokeWidth);
 
-        setBackgroundColor(config.getCanvasBackgroundColor());
-        setColor(config.getBrushColor());
+        refreshDrawBoard();
 
         pathsChanged(0);
+    }
+
+    static int randomColor(int alpha) {
+        Random rnd = new Random();
+        alpha = Math.min(Math.max(1, alpha), 255);
+        return Color.argb(alpha, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    }
+
+    private void listener(int viewId, final int colorId) {
+        findViewById(viewId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (R.id.tv_customize == v.getId()) {
+                    changeConfig(randomColor(255));
+                } else {
+                    changeConfig(getResources().getColor(colorId));
+                }
+            }
+        });
     }
 
     private void setColor(int pickedColor) {
@@ -150,7 +180,6 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
     };
 
     private void sendDrawing() {
-        // todo:
         Snackbar.make(my_canvas, "Generating image to send ...", Snackbar.LENGTH_SHORT).show();
         Bitmap bitmap = my_canvas.getBitmap();
         if (null == bitmap) {
@@ -158,6 +187,7 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
         } else {
             String savedPath = DrawBoardUtils.saveDraftBitmap(this, bitmap);
             startSending(savedPath);
+            my_canvas.clearCanvas();
         }
     }
 
@@ -176,5 +206,37 @@ public class DrawingActivity extends AppCompatActivity implements MyCanvas.Paths
     private void hide() {
         // do nothing but show toast
         Snackbar.make(my_canvas, "Back to origin ...", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        show();
+    }
+
+    protected void onPause() {
+        super.onPause();
+        hide();
+    }
+
+    private View guideLayout;
+    private ImageView guideAnimation;
+    public void show() {
+        DrawBoardUtils.checkAndShowGuide(this, guideLayout, guideAnimation, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawBoardUtils.startUseDrawBoard(guideLayout, config);
+            }
+        }, config);
+    }
+
+    private void changeConfig(int themeColor) {
+        config.setCanvasBackgroundColor(themeColor);
+        refreshDrawBoard();
+    }
+
+    private void refreshDrawBoard() {
+        setBackgroundColor(config.getCanvasBackgroundColor());
+        setColor(config.getBrushColor());
     }
 }

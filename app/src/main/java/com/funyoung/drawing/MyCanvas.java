@@ -16,8 +16,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
 import com.funyoung.drawable.R;
 
 import java.util.Iterator;
@@ -423,11 +421,11 @@ public class MyCanvas extends View {
             public void run() {
                 Point size = new Point();
                 activity.getWindowManager().getDefaultDisplay().getSize(size);
-                RequestOptions options = new RequestOptions()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                        .fitCenter();
+//                RequestOptions options = new RequestOptions()
+//                        .format(DecodeFormat.PREFER_ARGB_8888)
+//                        .fitCenter();
                 try {
-                    mBackgroundBitmap = Glide.with(getContext()).asBitmap().load(path).apply(options).into(size.x, size.y).get();
+                    mBackgroundBitmap = Glide.with(getContext()).load(path).asBitmap().into(size.x, size.y).get();
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

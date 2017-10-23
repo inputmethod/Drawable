@@ -33,7 +33,20 @@ class Config(context: Context) : BaseConfig(context) {
 }
  */
 public class Config {
+    private static final float DEFAULT_BRUSH_SIZE = 15f;
+    private static final int DEFAULT_BRUSH_COLOR = Color.BLACK;
+    private static final int DEFAULT_CANVAS_COLOR = Color.WHITE;
+
     private SharedPreferences preferences;
+
+    public boolean isStartUseDrawBoard() {
+        return preferences.getBoolean("START_USE_DRAW_BOARD", false);
+    }
+
+    public void setStartUseDrawBoard(boolean showBrushSize) {
+        preferences.edit().putBoolean("START_USE_DRAW_BOARD", showBrushSize).apply();
+    }
+
     public boolean isShowBrushSize() {
         return preferences.getBoolean("SHOW_BRUSH_SIZE", false);
     }
@@ -43,7 +56,7 @@ public class Config {
     }
 
     public int getBrushColor() {
-        return preferences.getInt("BRUSH_COLOR", Color.BLACK);
+        return preferences.getInt("BRUSH_COLOR", DEFAULT_BRUSH_COLOR);
     }
 
     public void setBrushColor(int brushColor) {
@@ -51,7 +64,7 @@ public class Config {
     }
 
     public float getBrushSize() {
-        return preferences.getFloat("BRUSH_SIZE", 5.0f);
+        return preferences.getFloat("BRUSH_SIZE", DEFAULT_BRUSH_SIZE);
     }
 
     public void setBrushSize(float brushSize) {
@@ -59,7 +72,7 @@ public class Config {
     }
 
     public int getCanvasBackgroundColor() {
-        return preferences.getInt("CANVAS_BACKGROUND_COLOR", Color.WHITE);
+        return preferences.getInt("CANVAS_BACKGROUND_COLOR", DEFAULT_CANVAS_COLOR);
     }
 
     public void setCanvasBackgroundColor(int canvasBackgroundColor) {
