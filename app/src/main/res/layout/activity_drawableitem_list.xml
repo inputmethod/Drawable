@@ -38,4 +38,11 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:src="@drawable/ani_drawboard_guide" />
+
 </android.support.design.widget.CoordinatorLayout>
